@@ -7,16 +7,14 @@ APP_DIR = os.path.dirname(os.path.abspath(__file__))
 model = joblib.load(os.path.join(APP_DIR, 'heart_model.pkl'))
 scaler = joblib.load(os.path.join(APP_DIR, 'scaler.pkl'))
 
-# Set page config
-st.set_page_config(page_title="Heart Disease Prediction", page_icon="🫀", layout="centered")
+# Page config
+st.set_page_config(page_title="Heart Disease Detection", page_icon="🫀", layout="centered")
 
-# Inject custom CSS for background and styling
+# Stylish CSS with glassmorphism and more
 st.markdown("""
     <style>
-    /* Import Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap');
 
-    /* App background with subtle overlay */
     html, body, [data-testid="stAppViewContainer"] {
         background: 
             linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -24,16 +22,15 @@ st.markdown("""
         background-size: cover;
         font-family: 'Montserrat', 'Roboto', sans-serif;
         color: #f0f0f0;
+        height: 100%;
     }
 
-    /* Sidebar styling */
     [data-testid="stSidebar"] {
         background: rgba(30, 30, 30, 0.85);
         color: #ddd;
         font-weight: 600;
     }
 
-    /* Main container with glassmorphism */
     .main > div {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
@@ -45,7 +42,6 @@ st.markdown("""
         border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
-    /* Title styling */
     .css-18e3th9 {
         font-size: 3rem !important;
         font-weight: 800 !important;
@@ -55,7 +51,6 @@ st.markdown("""
         text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     }
 
-    /* Subtitle */
     .css-1d391kg {
         color: #f0f0f0 !important;
         font-size: 1.2rem !important;
@@ -63,7 +58,6 @@ st.markdown("""
         font-weight: 500;
     }
 
-    /* Input fields styling */
     input, select, textarea {
         background: rgba(255, 255, 255, 0.15) !important;
         color: #f0f0f0 !important;
@@ -81,12 +75,10 @@ st.markdown("""
         box-shadow: 0 0 8px 2px #ff4b4b;
     }
 
-    /* Columns spacing */
     .css-1lcbmhc.e1fqkh3o3 {
         gap: 1.6rem !important;
     }
 
-    /* Buttons styling */
     button[kind="primary"] {
         background: linear-gradient(90deg, #ff4b4b, #ff1f1f) !important;
         color: white !important;
@@ -102,7 +94,6 @@ st.markdown("""
         box-shadow: 0 8px 20px rgba(255, 75, 75, 0.9);
     }
 
-    /* Result box */
     .result {
         font-size: 1.5rem;
         font-weight: 700;
@@ -115,36 +106,23 @@ st.markdown("""
         user-select: none;
     }
 
-    /* Result positive */
     .result.positive {
         background: rgba(0, 150, 0, 0.7);
         color: #e0ffe0;
         text-shadow: 0 1px 3px rgba(0, 50, 0, 0.7);
     }
 
-    /* Result negative */
     .result.negative {
         background: rgba(255, 50, 50, 0.7);
         color: #ffe0e0;
         text-shadow: 0 1px 3px rgba(100, 0, 0, 0.7);
     }
-
-    /* Footer or credits */
-    footer {
-        text-align: center;
-        margin-top: 3rem;
-        font-size: 0.9rem;
-        color: #ccc;
-        font-family: 'Roboto', sans-serif;
-    }
     </style>
 """, unsafe_allow_html=True)
 
-
-# App title and description
-st.image("https://cdn-icons-png.flaticon.com/512/616/616494.png", width=100)
+# App title and subtitle
 st.title("🫀 Heart Disease Prediction App")
-st.markdown("### Enter the following health data:")
+st.markdown("### 🔎 Enter your health details below")
 
 # Input form
 with st.form("prediction_form"):
@@ -169,8 +147,8 @@ with st.form("prediction_form"):
 
     submitted = st.form_submit_button("🔍 Predict")
 
-# Mapping for categorical options
 if submitted:
+    # Prepare input array
     input_data = np.array([[age,
                             1 if sex == "Male" else 0,
                             int(cp[cp.find("(")+1]),
@@ -185,16 +163,18 @@ if submitted:
                             ca,
                             int(thal[thal.find("(")+1])]])
 
+    # Scale input and predict
     input_scaled = scaler.transform(input_data)
     prediction = model.predict(input_scaled)
 
+    # Show result with styled box
     if prediction[0] == 1:
         st.markdown(
-            '<div class="result" style="background-color:#ffdddd; color:#990000;">⚠️ You may have a heart disease. Please consult a doctor.</div>',
+            '<div class="result negative">⚠️ You may have a heart disease. Please consult a doctor.</div>',
             unsafe_allow_html=True
         )
     else:
         st.markdown(
-            '<div class="result" style="background-color:#ddffdd; color:#006600;">✅ You are unlikely to have heart disease. Keep taking care of your health!</div>',
+            '<div class="result positive">✅ You are unlikely to have heart disease. Keep taking care of your health!</div>',
             unsafe_allow_html=True
         )
