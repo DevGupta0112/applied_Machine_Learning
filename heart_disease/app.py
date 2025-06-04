@@ -13,41 +13,39 @@ st.set_page_config(page_title="Heart Disease Prediction", page_icon="🫀", layo
 # Inject custom CSS for background and styling
 st.markdown("""
     <style>
-    /* Background */
-    .stApp {
+    html, body, [data-testid="stAppViewContainer"] {
         background-image: url('https://images.unsplash.com/photo-1588776814546-ec7e6d20b0df?auto=format&fit=crop&w=1350&q=80');
         background-size: cover;
-        background-repeat: no-repeat;
         background-attachment: fixed;
-        font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Card-style inputs */
-    .stNumberInput, .stSelectbox {
-        background-color: rgba(255, 255, 255, 0.8) !important;
-        border-radius: 12px;
-        padding: 10px;
+    [data-testid="stSidebar"] {
+        background-color: rgba(255,255,255,0.85);
     }
 
-    /* Main content styling */
-    .block-container {
+    .main > div {
         background-color: rgba(255, 255, 255, 0.9);
         padding: 2rem;
         border-radius: 20px;
         max-width: 700px;
         margin: auto;
+        box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
     }
 
-    /* Buttons */
-    button {
-        background-color: #ff4b4b;
-        color: white;
-        font-weight: bold;
-        border-radius: 8px;
-        padding: 10px;
+    input, select, textarea {
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        border-radius: 12px !important;
+        padding: 10px !important;
     }
 
-    /* Result styling */
+    button[kind="primary"] {
+        background-color: #ff4b4b !important;
+        color: white !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+    }
+
     .result {
         font-size: 24px;
         font-weight: bold;
@@ -59,7 +57,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
-st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alibabacloud.com%2Fblog%2Fzhpredicting-heart-diseases-with-machine-learning_218458&psig=AOvVaw1UorH2SlOWDlPNfjR4VY7i&ust=1749142068936000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLj_k5qc2I0DFQAAAAAdAAAAABAE", width=100)
+st.image("https://cdn-icons-png.flaticon.com/512/616/616494.png", width=100)
 st.title("🫀 Heart Disease Prediction App")
 st.markdown("### Enter the following health data:")
 
