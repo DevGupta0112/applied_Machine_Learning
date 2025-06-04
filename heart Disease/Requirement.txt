@@ -1,4 +1,4 @@
-Libbraries Required for This Model :
+Libraries Required for This Model :
 streamlit
 scikit-learn
 numpy
