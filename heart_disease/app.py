@@ -13,48 +13,133 @@ st.set_page_config(page_title="Heart Disease Prediction", page_icon="🫀", layo
 # Inject custom CSS for background and styling
 st.markdown("""
     <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap');
+
+    /* App background with subtle overlay */
     html, body, [data-testid="stAppViewContainer"] {
-        background-image: url('https://images.unsplash.com/photo-1588776814546-ec7e6d20b0df?auto=format&fit=crop&w=1350&q=80');
+        background: 
+            linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url('https://images.unsplash.com/photo-1588776814546-ec7e6d20b0df?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
         background-size: cover;
-        background-attachment: fixed;
+        font-family: 'Montserrat', 'Roboto', sans-serif;
+        color: #f0f0f0;
     }
 
+    /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background-color: rgba(255,255,255,0.85);
+        background: rgba(30, 30, 30, 0.85);
+        color: #ddd;
+        font-weight: 600;
     }
 
+    /* Main container with glassmorphism */
     .main > div {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 2rem;
-        border-radius: 20px;
-        max-width: 700px;
-        margin: auto;
-        box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border-radius: 25px;
+        padding: 2.5rem 3rem;
+        margin: 2rem auto;
+        max-width: 720px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
+    /* Title styling */
+    .css-18e3th9 {
+        font-size: 3rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 1.2px;
+        margin-bottom: 0.2rem !important;
+        color: #ff4b4b !important;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+
+    /* Subtitle */
+    .css-1d391kg {
+        color: #f0f0f0 !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 2rem !important;
+        font-weight: 500;
+    }
+
+    /* Input fields styling */
     input, select, textarea {
-        background-color: rgba(255, 255, 255, 0.8) !important;
-        border-radius: 12px !important;
-        padding: 10px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #f0f0f0 !important;
+        border: none !important;
+        border-radius: 15px !important;
+        padding: 14px 18px !important;
+        font-size: 1.1rem !important;
+        box-shadow: inset 2px 2px 8px rgba(0,0,0,0.2);
+        transition: background 0.3s ease;
+        font-family: 'Roboto', sans-serif !important;
+    }
+    input:focus, select:focus, textarea:focus {
+        background: rgba(255, 255, 255, 0.3) !important;
+        outline: none !important;
+        box-shadow: 0 0 8px 2px #ff4b4b;
     }
 
+    /* Columns spacing */
+    .css-1lcbmhc.e1fqkh3o3 {
+        gap: 1.6rem !important;
+    }
+
+    /* Buttons styling */
     button[kind="primary"] {
-        background-color: #ff4b4b !important;
+        background: linear-gradient(90deg, #ff4b4b, #ff1f1f) !important;
         color: white !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        padding: 10px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        padding: 16px 30px !important;
+        font-size: 1.3rem !important;
+        box-shadow: 0 4px 14px rgba(255, 75, 75, 0.5);
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    button[kind="primary"]:hover {
+        box-shadow: 0 8px 20px rgba(255, 75, 75, 0.9);
     }
 
+    /* Result box */
     .result {
-        font-size: 24px;
-        font-weight: bold;
-        padding: 1rem;
-        border-radius: 15px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 1.4rem 2rem;
+        border-radius: 30px;
         text-align: center;
+        margin-top: 2rem;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        font-family: 'Montserrat', sans-serif;
+        user-select: none;
+    }
+
+    /* Result positive */
+    .result.positive {
+        background: rgba(0, 150, 0, 0.7);
+        color: #e0ffe0;
+        text-shadow: 0 1px 3px rgba(0, 50, 0, 0.7);
+    }
+
+    /* Result negative */
+    .result.negative {
+        background: rgba(255, 50, 50, 0.7);
+        color: #ffe0e0;
+        text-shadow: 0 1px 3px rgba(100, 0, 0, 0.7);
+    }
+
+    /* Footer or credits */
+    footer {
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+        color: #ccc;
+        font-family: 'Roboto', sans-serif;
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # App title and description
 st.image("https://cdn-icons-png.flaticon.com/512/616/616494.png", width=100)
