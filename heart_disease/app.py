@@ -1,10 +1,11 @@
 import streamlit as st
 import numpy as np
 import joblib
-
+import os
 # Load model and scaler
-model = joblib.load('heart_model.pkl')
-scaler = joblib.load('scaler.pkl')
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+model = joblib.load(os.path.join(APP_DIR, 'heart_model.pkl'))
+scaler = joblib.load(os.path.join(APP_DIR, 'scaler.pkl'))
 
 # Set page config
 st.set_page_config(page_title="Heart Disease Prediction", page_icon="🫀", layout="centered")
@@ -58,6 +59,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
+st.image("https://cdn-icons-png.flaticon.com/512/616/616494.png", width=100)
 st.title("🫀 Heart Disease Prediction App")
 st.markdown("### Enter the following health data:")
 
