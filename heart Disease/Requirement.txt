@@ -1,0 +1,6 @@
+Libbraries Required for This Model :
+streamlit
+scikit-learn
+numpy
+pandas
+joblib
