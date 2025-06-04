@@ -59,7 +59,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
-st.image("https://cdn-icons-png.flaticon.com/512/616/616494.png", width=100)
+st.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alibabacloud.com%2Fblog%2Fzhpredicting-heart-diseases-with-machine-learning_218458&psig=AOvVaw1UorH2SlOWDlPNfjR4VY7i&ust=1749142068936000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLj_k5qc2I0DFQAAAAAdAAAAABAE", width=100)
 st.title("🫀 Heart Disease Prediction App")
 st.markdown("### Enter the following health data:")
 
