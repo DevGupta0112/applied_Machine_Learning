@@ -45,20 +45,6 @@ bg_url = "https://images.apollo247.in/pd-cms/cms/2023-10/diabetes_0.jpg?tr=q-80,
 set_background(bg_url)
 
 
-# Sidebar for navigation
-st.sidebar.title("⚙️ Settings")
-theme = st.sidebar.radio("Choose Theme:", ("Light", "Dark"))
-
-# Apply theme CSS
-if theme == "Dark":
-    st.markdown("""
-    <style>
-    .stApp {{
-        color: white;
-        background-color: #222;
-    }}
-    </style>
-    """, unsafe_allow_html=True)
 
 # Page Title
 st.markdown("<div class='title-text'><h1 style='text-align: center;'>🩺 Diabetes Prediction App</h1></div>", unsafe_allow_html=True)
