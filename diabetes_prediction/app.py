@@ -2,11 +2,17 @@ import streamlit as st
 import joblib
 import numpy as np
 import base64
+import os
+
 
 # Load model and scaler
-model = joblib.load('models/diabetes_knn_model.pkl')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-scaler = joblib.load('scaler.pkl')
+model_path = os.path.join(BASE_DIR, 'models', 'diabetes_knn_model.pkl')
+scaler_path = os.path.join(BASE_DIR, 'models', 'scaler.pkl')
+
+model = joblib.load(model_path)
+scaler = joblib.load(scaler_path)
 
 # Function to set background from URL
 def set_background(image_url):
