@@ -39,8 +39,9 @@ def set_background(image_url):
     """, unsafe_allow_html=True)
 
 # Set background
-bg_url = "https://www.apollo247.com/images/blog/diabetes-blog.jpg"
+bg_url = "https://images.apollo247.in/pd-cms/cms/2023-10/diabetes_0.jpg?tr=q-80,f-webp,w-400,dpr-2.5,c-at_max"
 set_background(bg_url)
+
 
 # Sidebar for navigation
 st.sidebar.title("⚙️ Settings")
