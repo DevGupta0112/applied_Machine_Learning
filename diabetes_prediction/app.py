@@ -15,11 +15,13 @@ model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
 # Function to set background from URL
-def set_background(image_url):
+import streamlit as st
+
+def set_background(bg_url):
     st.markdown(f"""
         <style>
         .stApp {{
-            background-image: url('{image_url}');
+            background-image: url("{bg_url}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
