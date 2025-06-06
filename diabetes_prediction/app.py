@@ -5,7 +5,8 @@ import base64
 
 # Load model and scaler
 model = joblib.load('models/diabetes_knn_model.pkl')
-scaler = joblib.load('models/scaler.pkl')
+
+scaler = joblib.load('scaler.pkl')
 
 # Function to set background from URL
 def set_background(image_url):
