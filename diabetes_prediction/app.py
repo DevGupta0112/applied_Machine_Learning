@@ -85,5 +85,5 @@ st.markdown("</div>", unsafe_allow_html=True)
 # Footer
 st.markdown("""
 ---
-<small>Made with ❤️ by Dev | Source: Pima Indians Diabetes Dataset</small>
+<small>Made with ❤️ by Dev 
 """, unsafe_allow_html=True)
