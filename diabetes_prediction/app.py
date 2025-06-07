@@ -47,7 +47,7 @@ set_background(bg_url)
 
 
 # Page Title
-st.markdown("<div class='title-text'><h1 style='text-align: center;'>🩺 Diabetes Prediction App</h1></div>", unsafe_allow_html=True)
+st.markdown("<div class='title-text'><h1 style='text-align: center;'>🩺 Diabetes Prediction App </h1></div>", unsafe_allow_html=True)
 
 # Input Form
 st.markdown("<div class='form-container'>", unsafe_allow_html=True)
