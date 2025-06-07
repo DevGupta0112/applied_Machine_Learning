@@ -81,5 +81,5 @@ st.markdown("</div>", unsafe_allow_html=True)
 # Footer
 st.markdown("""
 ---
-<small>Made with ❤️ by Dev 
+<small>Made with ❤️ by Dev Gupta
 """, unsafe_allow_html=True)
