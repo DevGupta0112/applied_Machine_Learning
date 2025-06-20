@@ -1,4 +1,4 @@
-# Applied_Machine_Learning
+<h1 align="center">Applied_Machine_Learning</h1>
 
 A growing collection of hands-on machine learning projects focused on solving real-world problems using Python and scikit-learn. This repository is part of my self-driven journey through the **"Learn by Building" ML series**, where I apply key concepts through practical implementation.
 
