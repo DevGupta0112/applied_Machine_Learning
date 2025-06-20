@@ -52,7 +52,7 @@ This repo will serve as a **live coding companion** to my progress through the *
 ## 📬 Connect
 
 - [LinkedIn](https://www.linkedin.com/in/yourprofile) — share feedback or collaborate!
--[GMail](devg7898@gmail.com)
+- [GMail](devg7898@gmail.com)
 
 ---
 
