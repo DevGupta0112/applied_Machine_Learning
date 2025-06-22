@@ -18,7 +18,7 @@ def set_bg(url):
             background-color: rgba(255, 255, 255, 0.93);
             padding: 2rem;
             border-radius: 12px;
-            max-width: 700px;
+            max-width: 900px;
             margin: auto;
         }}
         </style>
@@ -26,12 +26,12 @@ def set_bg(url):
         unsafe_allow_html=True
     )
 
-# Background image from your provided link
+# Set background image
 background_url = "https://images.unsplash.com/photo-1605902711622-cfb43c4437d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
 set_bg(background_url)
 
 # -------- Load ML models --------
-model_dir = "fruad_detection" # models are in the same fruad_detection folder
+model_dir = "fruad_detection"  # Correct path for deployed models
 
 try:
     models = {
@@ -47,27 +47,32 @@ except FileNotFoundError as e:
 # -------- UI --------
 st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 st.title("💳 Credit Card Fraud Detection")
-
 st.markdown("Select a machine learning model and input transaction details to detect fraud:")
 
 # Model selection
 model_choice = st.selectbox("🔍 Choose a Model", list(models.keys()))
 
-# Input section
+# Input section for V1 to V28 + Amount
 st.subheader("🧾 Transaction Input")
-v1 = st.number_input("V1", -100.0, 100.0, 0.0)
-v2 = st.number_input("V2", -100.0, 100.0, 0.0)
-v3 = st.number_input("V3", -100.0, 100.0, 0.0)
-v4 = st.number_input("V4", -100.0, 100.0, 0.0)
+input_features = {}
+
+# Layout 2 columns for better UX
+col1, col2 = st.columns(2)
+with col1:
+    for i in range(1, 15):
+        input_features[f"V{i}"] = st.number_input(f"V{i}", -100.0, 100.0, 0.0)
+with col2:
+    for i in range(15, 29):
+        input_features[f"V{i}"] = st.number_input(f"V{i}", -100.0, 100.0, 0.0)
+
 amount = st.number_input("Transaction Amount ($)", 0.0, 100000.0, 100.0)
+input_features["Amount"] = amount
 
 # Predict
 if st.button("🧠 Predict"):
-    input_data = pd.DataFrame([[v1, v2, v3, v4, amount]],
-                              columns=["V1", "V2", "V3", "V4", "Amount"])
-    
+    input_df = pd.DataFrame([input_features])
     model = models[model_choice]
-    prediction = model.predict(input_data)[0]
+    prediction = model.predict(input_df)[0]
     result = "⚠️ Fraudulent Transaction!" if prediction == 1 else "✅ Legitimate Transaction."
 
     st.subheader("📊 Prediction Result")
