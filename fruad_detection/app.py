@@ -1,42 +1,69 @@
 import streamlit as st
-import pickle
-import numpy as np
-from tensorflow.keras.models import load_model
+import pandas as pd
+import joblib
+import base64
 
-st.title("💳 Credit Card Fraud Detection")
-st.markdown("Choose a model and enter transaction details to check for fraud.")
+# -------- Background image setup --------
+def set_bg(url):
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("{url}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        .main-container {{
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-model_choice = st.selectbox("Choose a model:", [
-    "Logistic Regression", "Random Forest", "Gradient Boosting", "SVM", "Shallow Neural Network"
-])
+# Background URL (credit card fraud image)
+background_url = "https://cdn.prod.website-files.com/64035b5f27be9bd2bfb64a75/66a2616fd5b7d9bab6484f65_Enhance%20Your%20Risk%20Insurance%20Strategy%20(5).jpg"
+set_bg(background_url)
 
-if model_choice == "Shallow Neural Network":
-    model = load_model("models/shallow_nn_b.keras")
-    is_keras = True
-else:
-    file_map = {
-        "Logistic Regression": "logistic_model_b.pkl",
-        "Random Forest": "random_forest.pkl",
-        "Gradient Boosting": "gradient_boosting.pkl",
-        "SVM": "svm.pkl"
-    }
-    with open(f"models/{file_map[model_choice]}", "rb") as f:
-        model = pickle.load(f)
-    is_keras = False
+# -------- Load ML models --------
+models = {
+    "Random Forest": joblib.load("models/random_forest.pkl"),
+    "Support Vector Machine": joblib.load("models/svm.pkl"),
+    "Logistic Regression": joblib.load("models/logistic_model_b.pkl"),
+    "Gradient Boosting": joblib.load("models/gradient_boosting.pkl")
+}
 
-# Inputs
-st.subheader("📝 Enter Transaction Info")
-time = st.number_input("Time", min_value=0.0, value=10000.0)
-amount = st.number_input("Amount", min_value=0.0, value=200.0)
-features = [st.number_input(f"V{i}", value=0.0) for i in range(1, 29)]
+# -------- App UI --------
+st.markdown("<div class='main-container'>", unsafe_allow_html=True)
+st.title("💳 Credit Card Fraud Detection App")
 
-input_data = np.array([[time, amount] + features])
+st.markdown("Select a machine learning model and input transaction details to check if it's fraudulent.")
 
-# Predict
-if st.button("Predict"):
-    if is_keras:
-        prediction = (model.predict(input_data) > 0.5).astype("int")
-    else:
-        prediction = model.predict(input_data)
-    result = "🚨 Fraud Detected!" if prediction[0] == 1 else "✅ Legitimate Transaction"
-    st.success(f"Prediction: {result}")
+# Model selection
+model_choice = st.selectbox("🔍 Select Prediction Model", list(models.keys()))
+
+# Input features (simplified - match your dataset)
+st.subheader("🧾 Transaction Details")
+v1 = st.number_input("V1", -100.0, 100.0, 0.0)
+v2 = st.number_input("V2", -100.0, 100.0, 0.0)
+v3 = st.number_input("V3", -100.0, 100.0, 0.0)
+v4 = st.number_input("V4", -100.0, 100.0, 0.0)
+amount = st.number_input("Transaction Amount ($)", 0.0, 100000.0, 100.0)
+
+# Predict button
+if st.button("🧠 Predict Fraud"):
+    input_data = pd.DataFrame([[v1, v2, v3, v4, amount]],
+                              columns=["V1", "V2", "V3", "V4", "Amount"])
+    
+    model = models[model_choice]
+    prediction = model.predict(input_data)[0]
+    result = "⚠️ Fraudulent Transaction!" if prediction == 1 else "✅ Legitimate Transaction."
+
+    st.subheader("🔎 Prediction Result")
+    st.success(result) if prediction == 0 else st.error(result)
+
+st.markdown("</div>", unsafe_allow_html=True)
