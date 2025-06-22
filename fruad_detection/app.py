@@ -31,7 +31,7 @@ background_url = "https://images.unsplash.com/photo-1605902711622-cfb43c4437d5?i
 set_bg(background_url)
 
 # -------- Load ML models --------
-model_dir = "."  # models are in the same fruad_detection folder
+model_dir = "fruad_detection" # models are in the same fruad_detection folder
 
 try:
     models = {
