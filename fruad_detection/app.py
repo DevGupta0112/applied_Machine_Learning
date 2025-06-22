@@ -26,12 +26,12 @@ def set_bg(url):
         unsafe_allow_html=True
     )
 
-# Set background image
+# Background image
 background_url = "https://images.unsplash.com/photo-1605902711622-cfb43c4437d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
 set_bg(background_url)
 
 # -------- Load ML models --------
-model_dir = "fruad_detection"  # Correct path for deployed models
+model_dir = "fruad_detection"
 
 try:
     models = {
@@ -47,35 +47,41 @@ except FileNotFoundError as e:
 # -------- UI --------
 st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 st.title("💳 Credit Card Fraud Detection")
-st.markdown("Select a machine learning model and input transaction details to detect fraud:")
+st.markdown("Select a model and input transaction features to detect fraud:")
 
-# Model selection
 model_choice = st.selectbox("🔍 Choose a Model", list(models.keys()))
 
-# Input section for V1 to V28 + Amount
-st.subheader("🧾 Transaction Input")
-input_features = {}
+# -------- Input Section --------
+st.subheader("🧾 Transaction Input (30 Features)")
 
-# Layout 2 columns for better UX
-col1, col2 = st.columns(2)
-with col1:
-    for i in range(1, 15):
-        input_features[f"V{i}"] = st.number_input(f"V{i}", -100.0, 100.0, 0.0)
-with col2:
-    for i in range(15, 29):
-        input_features[f"V{i}"] = st.number_input(f"V{i}", -100.0, 100.0, 0.0)
+# Input fields for Time
+time = st.number_input("Time", 0.0, 200000.0, 10000.0)
 
-amount = st.number_input("Transaction Amount ($)", 0.0, 100000.0, 100.0)
-input_features["Amount"] = amount
+# Input fields for V1 - V28
+v_features = {}
+cols = st.columns(3)  # Divide input fields into 3 columns
+
+for i in range(1, 29):
+    col = cols[(i - 1) % 3]
+    with col:
+        v_features[f"V{i}"] = st.number_input(f"V{i}", -100.0, 100.0, 0.0)
+
+# Input for Amount
+amount = st.number_input("Amount ($)", 0.0, 100000.0, 100.0)
 
 # Predict
 if st.button("🧠 Predict"):
-    input_df = pd.DataFrame([input_features])
-    model = models[model_choice]
-    prediction = model.predict(input_df)[0]
-    result = "⚠️ Fraudulent Transaction!" if prediction == 1 else "✅ Legitimate Transaction."
+    input_values = [time] + list(v_features.values()) + [amount]
+    input_df = pd.DataFrame([input_values], columns=["Time"] + [f"V{i}" for i in range(1, 29)] + ["Amount"])
 
-    st.subheader("📊 Prediction Result")
-    st.success(result) if prediction == 0 else st.error(result)
+    try:
+        model = models[model_choice]
+        prediction = model.predict(input_df)[0]
+        result = "⚠️ Fraudulent Transaction!" if prediction == 1 else "✅ Legitimate Transaction."
+
+        st.subheader("📊 Prediction Result")
+        st.success(result) if prediction == 0 else st.error(result)
+    except Exception as e:
+        st.error(f"Prediction error: {e}")
 
 st.markdown("</div>", unsafe_allow_html=True)
