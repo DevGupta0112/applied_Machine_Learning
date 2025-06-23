@@ -7,13 +7,18 @@ def set_bg(url):
     st.markdown(
         f"""
         <style>
-        .stApp {{
+        [data-testid="stAppViewContainer"] {{
             background-image: url("{url}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }}
+
+        [data-testid="stHeader"] {{
+            background: rgba(0,0,0,0);
+        }}
+
         .main-container {{
             background-color: rgba(255, 255, 255, 0.93);
             padding: 2rem;
