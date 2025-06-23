@@ -31,14 +31,12 @@ background_url = "https://images.unsplash.com/photo-1605902711622-cfb43c4437d5?i
 set_bg(background_url)
 
 # -------- Load ML models --------
-model_dir = "fruad_detection"  # Make sure this matches your folder structure
+model_dir = "fruad_detection"  # Ensure this is correct relative path
 
 try:
     models = {
-        "Random Forest": joblib.load(f"{model_dir}/random_forest.pkl"),
         "Support Vector Machine": joblib.load(f"{model_dir}/svm.pkl"),
-        "Logistic Regression": joblib.load(f"{model_dir}/logistic_model_b.pkl"),
-        "Gradient Boosting": joblib.load(f"{model_dir}/gradient_boosting.pkl")
+        "Logistic Regression": joblib.load(f"{model_dir}/logistic_model_b.pkl")
     }
 except FileNotFoundError as e:
     st.error(f"❌ Missing model files: {e}")
@@ -57,7 +55,6 @@ st.subheader("🧾 Transaction Input (30 Features)")
 
 # Features as per dataset: Time, V1 to V28, Amount
 input_features = {}
-
 input_features["Time"] = st.number_input("Time", 0.0, 200000.0, 10000.0)
 
 for i in range(1, 29):
@@ -73,8 +70,6 @@ if st.button("🧠 Predict"):
     result = "⚠️ Fraudulent Transaction!" if prediction == 1 else "✅ Legitimate Transaction."
 
     st.subheader("📊 Prediction Result")
-    
-    # ✅ FIXED this part
     if prediction == 0:
         st.success(result)
     else:
