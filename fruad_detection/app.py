@@ -44,7 +44,6 @@ model_dir = "fruad_detection"
 
 try:
     models = {
-        "Random Forest": joblib.load(f"{model_dir}/random_forest.pkl"),
         "Support Vector Machine": joblib.load(f"{model_dir}/svm.pkl"),
         "Logistic Regression": joblib.load(f"{model_dir}/logistic_model_b.pkl")
     }
