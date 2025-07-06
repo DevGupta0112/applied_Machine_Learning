@@ -1,9 +1,9 @@
 import pandas as pd
-import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import pickle as pkl
 
 def clean_data(_):
     data = pd.read_csv(r'C:\PROJECTS FOR GITHUB\applied_Machine_Learning\Cancer_prediction\data.csv')
@@ -26,8 +26,24 @@ def create_model(data):
     return model, scaler
 
 def main():
-    data = clean_data(None)
-    model, scaler = create_model(data)
+   data = clean_data(None)
+   model, scaler = create_model(data)
+
+   model_path = r'C:\PROJECTS FOR GITHUB\applied_Machine_Learning\Cancer_prediction\model.pkl'
+   scaler_path = r'C:\PROJECTS FOR GITHUB\applied_Machine_Learning\Cancer_prediction\scaler.pkl'
+
+   
+   import os
+   os.makedirs(os.path.dirname(model_path), exist_ok=True)
+
+   with open(model_path, 'wb') as f:
+      pkl.dump(model, f)
+   
+
+   with open(scaler_path, 'wb') as f:
+      pkl.dump(scaler, f)
+   
+
 
 if __name__ == "__main__":
     main()
