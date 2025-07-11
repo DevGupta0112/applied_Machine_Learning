@@ -1,3 +1,8 @@
+import subprocess
+import sys
+
+# Log installed packages
+subprocess.run([sys.executable, "-m", "pip", "freeze"])
 import streamlit as st
 import pickle
 import pandas as pd
