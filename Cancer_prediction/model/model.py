@@ -16,7 +16,7 @@ def create_model(data):
     Y = data['diagnosis']
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+    X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.2, random_state=42)
     model = LogisticRegression()
     model.fit(X_train, Y_train)
     Y_pred = model.predict(X_test)
