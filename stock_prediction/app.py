@@ -115,8 +115,9 @@ if st.sidebar.button("Predict"):
     X_test, y_test = np.array(X_test), np.array(y_test)
 
     predictions = model.predict(X_test)
-    predictions = predictions * (1/scaler.scale_)
-    y_test = y_test * (1/scaler.scale_)
+    predictions = scaler.inverse_transform(np.concatenate([predictions, np.zeros((predictions.shape[0], final_test_scaled.shape[1]-1))], axis=1))[:,0]
+    y_test = scaler.inverse_transform(np.concatenate([y_test.reshape(-1, 1), np.zeros((y_test.shape[0], final_test_scaled.shape[1]-1))], axis=1))[:,0]
+
 
     # Predicted vs Actual
     fig_pred = go.Figure()
