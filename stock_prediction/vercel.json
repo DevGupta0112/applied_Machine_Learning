@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/predict.py", "use": "@vercel/python" },
+    { "src": "pages/**/*.js", "use": "@vercel/next" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "api/predict.py" },
+    { "src": "/(.*)", "dest": "/pages/index.js" }
+  ]
+}
